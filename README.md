@@ -14,4 +14,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Accessing the application on Vercel server
 
-Demo deployed at `https://color-listing.vercel.app/`.
+Demo deployed at [https://color-listing.vercel.app/](https://color-listing.vercel.app/).
