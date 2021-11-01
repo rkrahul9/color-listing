@@ -37,7 +37,7 @@ export default function Listing({ text }) {
   }
 
   return (
-    <div className={noResult ? "text-center" : styles.gridContainer}>
+    <div className={(loading || noResult) ? "text-center" : styles.gridContainer}>
       {loading
         ? <Spinner />
         : getColorListing()
