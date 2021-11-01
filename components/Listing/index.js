@@ -1,6 +1,7 @@
 import React,{ useEffect, useState } from 'react';
 import Spinner from '../Spinner';
-import { useDebouncedValue } from '../../utils/debounceHook'; 
+import { useDebouncedValue } from '../../utils/debounceHook';
+import styles from '../../styles/Home.module.css' 
 
 export default function Listing({ text }) {
   const [colors, setColors] = useState([]);
@@ -21,22 +22,22 @@ export default function Listing({ text }) {
     setColors(colors);
     setLoading(false); 
   }
+  
+  const noResult = colors.length === 0;
 
   const getColorListing = () => {
-    const noResult = colors.length === 0;
-
     return(
       <>
         {noResult
             ? <p className="h4 my-3">Nothing matched with the query. Please search something meaningful...</p> 
-            : <>{colors.map(color => <div key={color.hex} style={{'background': `${color.hex}`}}className="p-5 bd-highlight border border-2 m-2">{color.hex}</div>)}</>
+            : <>{colors.map(color => <div key={color.hex} style={{'background': `${color.hex}`}} className="p-5 bd-highlight border border-2 m-2 text-center">{color.hex}</div>)}</>
         }
       </>
     );
   }
 
   return (
-    <div className="d-flex flex-wrap">
+    <div className={noResult ? "text-center" : styles.gridContainer}>
       {loading
         ? <Spinner />
         : getColorListing()
