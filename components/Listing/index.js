@@ -1,6 +1,7 @@
 import React,{ useEffect, useState } from 'react';
 import Spinner from '../Spinner';
 import { useDebouncedValue } from '../../utils/debounceHook';
+import API from '../../utils/fetchController';
 import styles from '../../styles/Home.module.css' 
 
 export default function Listing({ text }) {
@@ -13,14 +14,19 @@ export default function Listing({ text }) {
   },[debouncedValue]);
 
   useEffect(() => {
+    return () => API.abort();
+  }, [])
+
+  useEffect(() => {
     setLoading(true);
   },[text]);
 
   const fetchColors = async () => {
-    const res = await fetch(`https://api.color.pizza/v1/names/?name=${text}&goodnamesonly=true&noduplicates=true`);
-    const { colors } = await res.json();
-    setColors(colors);
-    setLoading(false); 
+    const { colors } = await API.request(`https://api.color.pizza/v1/names/?name=${text}&goodnamesonly=true&noduplicates=true`);
+    if (!API.isAborted()) {
+      setColors(colors);
+      setLoading(false);
+    }
   }
   
   const noResult = colors.length === 0;
